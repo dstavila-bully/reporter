@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor ;
-using UnityEditor.Callbacks;
-
 using System.IO;
-using System.Collections;
-
-
 
 public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcessor
 {
     
-	[MenuItem("Reporter/Create")]
+	[MenuItem("Bully/Reporter/Create")]
 	public static void CreateReporter()
 	{
 		GameObject reporterObj = new GameObject();
@@ -52,6 +47,7 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 		reporter.images.reporterScrollerSkin = (GUISkin)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/reporterScrollerSkin.guiskin", typeof(GUISkin));
 
 	}
+
 	[InitializeOnLoad]
 	public class BuildInfo
 	{
@@ -60,23 +56,29 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 	        EditorApplication.update += Update;
 	    }
 	 
-		static bool isCompiling = true ; 
+		private static bool _isCompiling = true ; 
+
 	    static void Update ()
 	    {
-			if( !EditorApplication.isCompiling && isCompiling )
+			if( !EditorApplication.isCompiling && _isCompiling )
 			{
 	        	//Debug.Log("Finish Compile");
 				if( !Directory.Exists( Application.dataPath + "/StreamingAssets"))
 				{
 					Directory.CreateDirectory( Application.dataPath + "/StreamingAssets");
 				}
-				string info_path = Application.dataPath + "/StreamingAssets/build_info.txt" ;
+
+				var info_path = Application.dataPath + "/StreamingAssets/build_info.txt" ;
 				StreamWriter build_info = new StreamWriter( info_path );
-				build_info.Write(  "Build from " + SystemInfo.deviceName + " at " + System.DateTime.Now.ToString() );
+				build_info.Write(
+                        "Build from " + SystemInfo.deviceName +
+                        "(" + SystemInfo.operatingSystem + ")" +
+                        " at " + System.DateTime.Now.ToString() );
+
 				build_info.Close();
 			}
 			
-			isCompiling = EditorApplication.isCompiling ;
+			_isCompiling = EditorApplication.isCompiling ;
 	    }
 	}
 }
