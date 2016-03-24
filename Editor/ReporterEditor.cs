@@ -4,6 +4,12 @@ using System.IO;
 
 public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcessor
 {
+    const string imagesPath = "Assets/Bully.Core/Dependencies/Reporter/Images/";
+
+    private static Texture2D LoadImage(string fileName)
+    {
+        return (Texture2D)AssetDatabase.LoadAssetAtPath(imagesPath + fileName, typeof(Texture2D));
+    }
     
 	[MenuItem("Bully/Reporter/Create")]
 	public static void CreateReporter()
@@ -15,36 +21,36 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 		//reporterObj.AddComponent<TestReporter>();
 
 		reporter.images = new Images();
-		reporter.images.clearImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/clear.png", typeof(Texture2D));
-		reporter.images.collapseImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/collapse.png", typeof(Texture2D));
-		reporter.images.clearOnNewSceneImage= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/clearOnSceneLoaded.png", typeof(Texture2D));
-		reporter.images.showTimeImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/timer_1.png", typeof(Texture2D));
-		reporter.images.showSceneImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/UnityIcon.png", typeof(Texture2D));
-		reporter.images.userImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/user.png", typeof(Texture2D));
-		reporter.images.showMemoryImage 	= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/memory.png", typeof(Texture2D));
-		reporter.images.softwareImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/software.png", typeof(Texture2D));
-		reporter.images.dateImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/date.png", typeof(Texture2D));
-		reporter.images.showFpsImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/fps.png", typeof(Texture2D));
-		reporter.images.showGraphImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/.png", typeof(Texture2D));
-		reporter.images.graphImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/chart.png", typeof(Texture2D));
-		reporter.images.infoImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/info.png", typeof(Texture2D));
-		reporter.images.searchImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/search.png", typeof(Texture2D));
-		reporter.images.closeImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/close.png", typeof(Texture2D));
-		reporter.images.buildFromImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/buildFrom.png", typeof(Texture2D));
-		reporter.images.systemInfoImage 	= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/ComputerIcon.png", typeof(Texture2D));
-		reporter.images.graphicsInfoImage 	= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/graphicCard.png", typeof(Texture2D));
-		reporter.images.backImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/back.png", typeof(Texture2D));
-		reporter.images.cameraImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/.png", typeof(Texture2D));
-		reporter.images.logImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/log_icon.png", typeof(Texture2D));
-		reporter.images.warningImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/warning_icon.png", typeof(Texture2D));
-		reporter.images.errorImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/error_icon.png", typeof(Texture2D));
-		reporter.images.barImage 			= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/bar.png", typeof(Texture2D));
-		reporter.images.button_activeImage 	= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/button_active.png", typeof(Texture2D));
-		reporter.images.even_logImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/even_log.png", typeof(Texture2D));
-		reporter.images.odd_logImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/odd_log.png", typeof(Texture2D));
-		reporter.images.selectedImage 		= (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/selected.png", typeof(Texture2D));
+		reporter.images.clearImage 			= LoadImage("clear.png");
+		reporter.images.collapseImage 		= LoadImage("collapse.png");
+		reporter.images.clearOnNewSceneImage= LoadImage("clearOnSceneLoaded.png");
+		reporter.images.showTimeImage 		= LoadImage("timer_1.png");
+		reporter.images.showSceneImage 		= LoadImage("UnityIcon.png");
+		reporter.images.userImage 			= LoadImage("user.png");
+		reporter.images.showMemoryImage 	= LoadImage("memory.png");
+		reporter.images.softwareImage 		= LoadImage("software.png");
+		reporter.images.dateImage 			= LoadImage("date.png");
+		reporter.images.showFpsImage 		= LoadImage("fps.png");
+		reporter.images.showGraphImage 		= LoadImage(".png");
+		reporter.images.graphImage 			= LoadImage("chart.png");
+		reporter.images.infoImage 			= LoadImage("info.png");
+		reporter.images.searchImage 		= LoadImage("search.png");
+		reporter.images.closeImage 			= LoadImage("close.png");
+		reporter.images.buildFromImage 		= LoadImage("buildFrom.png");
+		reporter.images.systemInfoImage 	= LoadImage("ComputerIcon.png");
+		reporter.images.graphicsInfoImage 	= LoadImage("graphicCard.png");
+		reporter.images.backImage 			= LoadImage("back.png");
+		reporter.images.cameraImage 		= LoadImage(".png");
+		reporter.images.logImage 			= LoadImage("log_icon.png");
+		reporter.images.warningImage 		= LoadImage("warning_icon.png");
+		reporter.images.errorImage 			= LoadImage("error_icon.png");
+		reporter.images.barImage 			= LoadImage("bar.png");
+		reporter.images.button_activeImage 	= LoadImage("button_active.png");
+		reporter.images.even_logImage 		= LoadImage("even_log.png");
+		reporter.images.odd_logImage 		= LoadImage("odd_log.png");
+		reporter.images.selectedImage 		= LoadImage("selected.png");
 
-		reporter.images.reporterScrollerSkin = (GUISkin)AssetDatabase.LoadAssetAtPath("Assets/Reporter/Images/reporterScrollerSkin.guiskin", typeof(GUISkin));
+		reporter.images.reporterScrollerSkin = (GUISkin)AssetDatabase.LoadAssetAtPath<GUISkin>(imagesPath + "reporterScrollerSkin.guiskin");
 
 	}
 
