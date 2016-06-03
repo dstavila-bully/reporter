@@ -1,10 +1,12 @@
 using UnityEngine;
-using UnityEditor ;
+using UnityEditor;
 using System.IO;
+using System;
 
 public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcessor
 {
-    const string imagesPath = "Assets/Bully.Core/Dependencies/Reporter/Images/";
+    //const string imagesPath = "Assets/Bully.Core/Dependencies/Reporter/Images/";
+    static string imagesPath;
 
     private static Texture2D LoadImage(string fileName)
     {
@@ -19,6 +21,10 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 		Reporter reporter = reporterObj.AddComponent<Reporter>();
 		reporterObj.AddComponent<ReporterMessageReceiver>();
 		//reporterObj.AddComponent<TestReporter>();
+        var script = MonoScript.FromMonoBehaviour( reporter );
+        imagesPath = Path.GetDirectoryName( AssetDatabase.GetAssetPath( script )) + "/Images/";
+        //Debug.Log("Path = " + path);
+
 
 		reporter.images = new Images();
 		reporter.images.clearImage 			= LoadImage("clear.png");
