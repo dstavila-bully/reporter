@@ -317,6 +317,8 @@ public class Reporter : MonoBehaviour {
 			Application.logMessageReceivedThreaded += CaptureLogThread ;
 			created = true ;
 			//addSample();
+            //
+            SceneManager.sceneLoaded += Handle_OnLevelWasLoaded;
 		}
 		else
 		{
@@ -1984,13 +1986,13 @@ public class Reporter : MonoBehaviour {
 	}
 
 	//new scene is loaded
-	void OnLevelWasLoaded()
+	void Handle_OnLevelWasLoaded(Scene scene, LoadSceneMode loadMode)
 	{
 		if( clearOnNewSceneLoaded )
 			clear();
 
-		currentScene = SceneManager.GetActiveScene().name ;
-		Debug.Log( "Scene " + SceneManager.GetActiveScene().name + " is loaded");
+        currentScene = scene.name;
+		Debug.Log("Scene " + scene.name + " is loaded");
 	}
 
 	//save user config
