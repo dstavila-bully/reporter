@@ -5,8 +5,8 @@ using System;
 
 public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcessor
 {
-    //const string imagesPath = "Assets/Bully.Core/Dependencies/Reporter/Images/";
     static string imagesPath;
+    const int ReporterExecOrder = -12000;
 
     private static Texture2D LoadImage(string fileName)
     {
@@ -16,14 +16,18 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 	[MenuItem("Bully/Reporter/Create")]
 	public static void CreateReporter()
 	{
-		GameObject reporterObj = new GameObject();
+		var reporterObj = new GameObject();
 		reporterObj.name = "Reporter";
 		Reporter reporter = reporterObj.AddComponent<Reporter>();
 		reporterObj.AddComponent<ReporterMessageReceiver>();
-		//reporterObj.AddComponent<TestReporter>();
+
         var script = MonoScript.FromMonoBehaviour( reporter );
         imagesPath = Path.GetDirectoryName( AssetDatabase.GetAssetPath( script )) + "/Images/";
-        //Debug.Log("Path = " + path);
+
+        if (MonoImporter.GetExecutionOrder(script) != ReporterExecOrder)
+        {
+            MonoImporter.SetExecutionOrder(script, ReporterExecOrder);
+        }
 
 
 		reporter.images = new Images();
