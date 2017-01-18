@@ -454,18 +454,20 @@ public class Reporter : MonoBehaviour {
 		evenLogStyle.alignment = TextAnchor.UpperLeft ;
 		evenLogStyle.imagePosition = ImagePosition.ImageLeft ;
 		evenLogStyle.fontSize = (int)(size.y /2 );
-		//evenLogStyle.wordWrap = true;
+        // evenLogStyle.normal.textColor = Color.magenta;
+        //evenLogStyle.wordWrap = true;
 
-		oddLogStyle = new GUIStyle();
+        oddLogStyle = new GUIStyle();
 		oddLogStyle.normal.background = images.odd_logImage;
 		oddLogStyle.fixedHeight = size.y ;
 		oddLogStyle.clipping = TextClipping.Clip ;
 		oddLogStyle.alignment = TextAnchor.UpperLeft ;
 		oddLogStyle.imagePosition = ImagePosition.ImageLeft ;
 		oddLogStyle.fontSize = (int)(size.y /2 );
-		//oddLogStyle.wordWrap = true ;
+        // oddLogStyle.normal.textColor = Color.magenta;
+        //oddLogStyle.wordWrap = true ;
 
-		logButtonStyle = new GUIStyle();
+        logButtonStyle = new GUIStyle();
 		//logButtonStyle.wordWrap = true;
 		logButtonStyle.fixedHeight = size.y ;
 		logButtonStyle.clipping = TextClipping.Clip ;
@@ -474,13 +476,14 @@ public class Reporter : MonoBehaviour {
 		//logButtonStyle.wordWrap = true;
 		logButtonStyle.fontSize = (int)(size.y /2 );
 		logButtonStyle.padding = new RectOffset(paddingX,paddingX,paddingY,paddingY);
+        // logButtonStyle.normal.textColor = Color.magenta;
 
-		selectedLogStyle = new GUIStyle();
+        selectedLogStyle = new GUIStyle();
 		selectedLogStyle.normal.background = images.selectedImage;
 		selectedLogStyle.fixedHeight = size.y ;
 		selectedLogStyle.clipping = TextClipping.Clip ;
 		selectedLogStyle.alignment = TextAnchor.UpperLeft ;
-		selectedLogStyle.normal.textColor = Color.white ;
+		selectedLogStyle.normal.textColor = Color.red ;
 		//selectedLogStyle.wordWrap = true;
 		selectedLogStyle.fontSize = (int)(size.y /2 );
 
@@ -489,7 +492,7 @@ public class Reporter : MonoBehaviour {
 		selectedLogFontStyle.fixedHeight = size.y ;
 		selectedLogFontStyle.clipping = TextClipping.Clip ;
 		selectedLogFontStyle.alignment = TextAnchor.UpperLeft ;
-		selectedLogFontStyle.normal.textColor = Color.white ;
+		selectedLogFontStyle.normal.textColor = Color.red ;
 		//selectedLogStyle.wordWrap = true;
 		selectedLogFontStyle.fontSize = (int)(size.y /2 );
 		selectedLogFontStyle.padding = new RectOffset(paddingX,paddingX,paddingY,paddingY);
@@ -1022,6 +1025,21 @@ public class Reporter : MonoBehaviour {
 			tempRect = GUILayoutUtility.GetLastRect();
 			GUI.Label( tempRect , gcTotalMemory.ToString("0.0") , lowerLeftFontStyle );
 		}
+
+		if( GUILayout.Button(closeContent ,barStyle, GUILayout.Width(size.x*2) , GUILayout.Height(size.y*2)))
+		{
+			show = false;
+			ReporterGUI gui = gameObject.GetComponent<ReporterGUI>();
+			DestroyImmediate( gui );
+
+			try{
+				gameObject.SendMessage( "OnHideReporter" );
+			}
+			catch( System.Exception e ){
+				Debug.LogException( e );
+			}
+		}
+
 		if( showFpsButton )
 		{
 			if( GUILayout.Button( showFpsContent , (showFps)?buttonActiveStyle:barStyle , GUILayout.Width(size.x*2) ,GUILayout.Height(size.y*2)))
@@ -1119,19 +1137,7 @@ public class Reporter : MonoBehaviour {
 		}
 		GUILayout.EndHorizontal();
 
-		if( GUILayout.Button(closeContent ,barStyle, GUILayout.Width(size.x*2) , GUILayout.Height(size.y*2)))
-		{
-			show = false;
-			ReporterGUI gui = gameObject.GetComponent<ReporterGUI>();
-			DestroyImmediate( gui );
-
-			try{
-				gameObject.SendMessage( "OnHideReporter" );
-			}
-			catch( System.Exception e ){
-				Debug.LogException( e );
-			}
-		}
+		
 
 
 		GUILayout.EndHorizontal();
