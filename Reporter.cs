@@ -43,6 +43,8 @@ public class Images
 	public Texture2D	selectedImage;
 
 	public GUISkin		reporterScrollerSkin;
+
+    public Texture2D lockImage;
 }
 
 //To use Reporter just create reporter from menu (Reporter->Create) at first scene your game start .
@@ -169,7 +171,9 @@ public class Reporter : MonoBehaviour {
 	bool showFpsButton = true;
 	bool showSearchText = true;
 
-	string buildDate;
+    bool isScrollingLocked = false;
+
+    string buildDate;
 	string logDate ;
 	float  logsMemUsage;
 	float  graphMemUsage ;
@@ -224,8 +228,10 @@ public class Reporter : MonoBehaviour {
 	GUIContent 	searchContent ;
 	GUIContent 	closeContent ;
 
+    GUIContent lockContent;
 
-	GUIContent 	buildFromContent ;
+
+    GUIContent 	buildFromContent ;
 	GUIContent  systemInfoContent ;
 	GUIContent  graphicsInfoContent ;
 	GUIContent 	backContent ;
@@ -344,8 +350,9 @@ public class Reporter : MonoBehaviour {
 		searchContent = new GUIContent("",images.searchImage,"Search for logs");
 		closeContent = new GUIContent("",images.closeImage,"Hide logs");
 		userContent = new GUIContent("",images.userImage,"User");
+        lockContent = new GUIContent("", images.lockImage, "Lock scrolling");
 
-		buildFromContent = new GUIContent("",images.buildFromImage,"Build From");
+        buildFromContent = new GUIContent("",images.buildFromImage,"Build From");
 		systemInfoContent = new GUIContent("",images.systemInfoImage,"System Info");
 		graphicsInfoContent = new GUIContent("",images.graphicsInfoImage,"Graphics Info");
 		backContent = new GUIContent("",images.backImage,"Back");
@@ -1040,6 +1047,11 @@ public class Reporter : MonoBehaviour {
 			}
 		}
 
+		if (GUILayout.Button(lockContent, barStyle, GUILayout.Width(size.x * 2), GUILayout.Height(size.y * 2)))
+		{
+            isScrollingLocked = !isScrollingLocked;
+        }
+
 		if( showFpsButton )
 		{
 			if( GUILayout.Button( showFpsContent , (showFps)?buttonActiveStyle:barStyle , GUILayout.Width(size.x*2) ,GUILayout.Height(size.y*2)))
@@ -1153,7 +1165,8 @@ public class Reporter : MonoBehaviour {
 
 		GUILayout.BeginArea( logsRect , backStyle );
 
-		GUI.skin = logScrollerSkin ;
+		if (isScrollingLocked == false)
+			GUI.skin = logScrollerSkin ;
 		//setStartPos();
 		Vector2 drag = getDrag();
 
@@ -1290,7 +1303,7 @@ public class Reporter : MonoBehaviour {
 
 
 			GUILayout.BeginHorizontal(  currentLogStyle  );
-			if( log == selectedLog ){
+			if( log == selectedLog){
 				GUILayout.Box(content ,nonStyle, GUILayout.Width(size.x) ,GUILayout.Height(size.y));
 				GUILayout.Label( log.condition ,selectedLogFontStyle   );
 				//GUILayout.FlexibleSpace();
@@ -1314,12 +1327,12 @@ public class Reporter : MonoBehaviour {
 
 			}
 			else {
-				if(GUILayout.Button(content ,nonStyle, GUILayout.Width(size.x),GUILayout.Height(size.y) ))
+				if(GUILayout.Button(content ,nonStyle, GUILayout.Width(size.x),GUILayout.Height(size.y) ) && isScrollingLocked == false)
 				{
 					//selectedIndex = startIndex + index ;
 					selectedLog = log;
 				}
-				if( GUILayout.Button( log.condition ,logButtonStyle ) )
+				if( GUILayout.Button( log.condition ,logButtonStyle ) && isScrollingLocked == false)
 				{
 					//selectedIndex = startIndex + index ;
 					selectedLog = log;
@@ -1771,8 +1784,10 @@ public class Reporter : MonoBehaviour {
 	Vector2 mousePosition ;
 	Vector2 getDrag()
 	{
+		if (isScrollingLocked)
+            return Vector2.zero;
 
-		if( Application.platform == RuntimePlatform.Android ||
+        if( Application.platform == RuntimePlatform.Android ||
 			Application.platform == RuntimePlatform.IPhonePlayer )
 		{
 			if( Input.touches.Length != 1 )
