@@ -12,7 +12,7 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
     {
         return (Texture2D)AssetDatabase.LoadAssetAtPath(imagesPath + fileName, typeof(Texture2D));
     }
-    
+
 	[MenuItem("Bully/Reporter/Create")]
 	public static void CreateReporter()
 	{
@@ -71,8 +71,8 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 	    {
 	        EditorApplication.update += Update;
 	    }
-	 
-		private static bool _isCompiling = true ; 
+
+		private static bool _isCompiling = true ;
 
 	    static void Update ()
 	    {
@@ -93,7 +93,7 @@ public class MyAssetModificationProcessor : UnityEditor.AssetModificationProcess
 
 				build_info.Close();
 			}
-			
+
 			_isCompiling = EditorApplication.isCompiling ;
 	    }
 	}

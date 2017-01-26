@@ -1149,7 +1149,7 @@ public class Reporter : MonoBehaviour {
 		}
 		GUILayout.EndHorizontal();
 
-		
+
 
 
 		GUILayout.EndHorizontal();
